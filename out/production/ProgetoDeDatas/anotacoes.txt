@@ -1,0 +1,181 @@
+### CONCEITOS IMPORTANTES ###
+
+- Data-[hora] local:
+  ano-mês-dia-[hora]
+  [hora] opcional
+
+- Data hora global:
+  ano-mês-dia-hora com fuso horário
+
+- Duração:
+  Tempo decorrido entre duas data-horas
+
+ - Exemplo: 10 de Janeiro de 2022 às 8 horas da noite até 11 de Janeiro de 2022 à 1 da manhã
+ (a duração de tempo entre esses dois instantes é de 5 horas)
+
+ * Quando usar
+
+  Data-[hora] local: Quando o momento exato não interessa a pessoas de outro fuso horário.
+  Uso comum: Sistemas de região única, Exel.
+
+- Exemplo: Data de nascimento(15/06/2001)
+
+
+Data-hora global: Quando o momento exato interessa a pessoas de outro fuso horário.
+  Uso comum: Sistemas de multi-região, web.
+
+- Exemplo: O sorteio será 21/08/2022 às 20h (horário de São Paulo)
+  Cada pessoa que vir a menságem, verá o também foso horário referente ao local do evento
+
+ ### Timezone(Fuso horário) ###
+
+  - GMT (Greenwich Mean Time)
+  Horário de Londres
+  Horário padrão UTC - Coordinated Universal Time
+  Também chamado de "z" time, ou Zulu time
+
+  - Outros foso horários relativos ao GMT/UTC
+  São Paulo: GMT-3
+  Manaus: GMT-4
+  Portugal: GMT+1
+
+ - Muitas linguagens/tecnologias usam nomes para as timezones
+ "US/Pacific"
+ "America/Sao_Paulo"
+  etc
+
+  Padrão ISO 8601
+  Data-[hora] local:
+  2022-07-21
+  2022-07-21T14:52
+  2022-07-21T14:52:09
+  2022-07-21T14:52:09.4073
+
+  Data-hora local:
+  2022-07-21T14:52:09Z
+  2022-07-21T14:52:09.254935Z
+  2022-07-21T14:52:09-03:00
+
+  Operações importantes com data-hora
+  Instalação
+   (agora) -> Data-hora
+   Texto ISO 8601 Data-hora
+   dia, mês, ano,[horário] -> Data-hora local
+
+  Formatação
+   Data-hora -> Texto ISO 8601
+   Data-hora -> Texto formatado customizado
+
+  Obter dados de uma data-hora local
+   Data-hora local -> dia, mês, ano,horário
+
+  Converter data-hora global para local
+   Data-hora global, timezone (sistema local) -> Data-hora local
+
+  Cálculos com data-hora
+   Data-hora +/- tempo -> Data-hora
+   Data-hora 1, Data-hora 2 -> Duração
+
+  Principais tipos Java (verção 8+)
+
+   Data local
+    LocalDate (Data):
+    Formato ISO 8601: "yyyy-MM-dd"
+    Exemplo: "2023-05-30"
+    *Não é recomendado utilizar o tipo date pois em sua essência é a contagem de milisegundos
+    desdee 1 de janeiro de 1970 até agora. Sendo assim ao fazermos contas vai ser muito mais
+    difícil chegar a um resultado
+
+   Hora local
+   LocalTime (Hora):
+   Formato ISO 8601: "HH:mm:ss"
+   Exemplo: "14:30:00"
+
+   Data-hora local
+   LocalDateTime (Data e Hora):
+   Formato ISO 8601: "yyyy-MM-dd'T'HH:mm:ss"
+   Exemplo: "2023-05-30T14:30:00"
+
+   Data-hora global
+    Instant(Instante no tempo)
+    Como um Instant representa um instante específico no tempo, o seu formato pode ser
+    personalizado de acordo com a nessecidade por meio da classe DateTimeFormatter. Veja os
+    formatos possíveis a baixo:
+
+    Formato ISO 8601: "yyyy-MM-dd'T'HH:mm:ss.SSSXXX"
+    Exemplo: "2023-05-30T14:30:00.123Z"
+
+    Formato ISO 8601: "yyyy-MM-dd'T'HH:mm:ss.SSS"
+    Exemplo: "2023-05-30T14:30:00.123"
+
+
+    Formato ISO 8601: "yyyy-MM-dd'T'HH:mm:ss"
+    Exemplo: "2023-05-30T14:30:00"
+
+    Formato ISO 8601: "yyyy-MM-dd'T'HH:mm"
+    Exemplo: "2023-05-30T14:30"
+
+    Formato ISO 8601: "yyyy-MM-dd HH:mm"
+    Exemplo: "2023-05-30 14:30"
+
+    Formato ISO 8601: "yyyy-MM-dd HH"
+    Exemplo: "2023-05-30 14"
+
+   Para formatos diferentes dos já listados podemos usar os tipos já prontos que existem
+   no java
+
+   Duração
+
+    Duration
+    A classe Duration não possui um formato intrínseco, pois é
+    uma representação de um intervalo de tempo e não uma data específica.
+    No entanto, você pode formatar uma instância de Duration em uma representação
+    de texto para exibi-la ou armazená-la de forma legível para humanos.
+
+    Exemplo:
+    Duration duration = Duration.ofHours(2).plusMinutes(30).plusSeconds(45);
+            String formattedDuration = formatDuration(duration);
+
+   Outros
+
+    ZoneId
+    Em Java, a classe ZoneId é usada para representar um identificador de fuso horário.
+    No entanto, o ZoneId não possui um formato intrínseco, pois é apenas uma representação
+    do identificador do fuso horário.
+
+    Ao exibir ou armazenar um ZoneId, você pode usar o padrão de formatação específico
+    que atenda às suas necessidades.
+
+    Exemplo:
+
+      ZoneId zoneId = ZoneId.of("Europe/Paris");
+            String formattedZoneId = zoneId.toString();
+            System.out.println("ZoneId formatado: " + formattedZoneId);
+
+
+    ChronoUnit
+
+    A classe ChronoUnit faz parte da API de data e hora do Java e é usada
+    para representar unidades de tempo. Ela permite calcular a diferença
+    entre duas instâncias de LocalDate, LocalTime, LocalDateTime,
+    ZonedDateTime ou Instant em uma unidade de tempo específica.
+
+        LocalDate dataInicial = LocalDate.of(2023, 1, 1);
+        LocalDate dataFinal = LocalDate.of(2023, 5, 30);
+
+        long dias = ChronoUnit.DAYS.between(dataInicial, dataFinal);
+        long meses = ChronoUnit.MONTHS.between(dataInicial, dataFinal);
+        long anos = ChronoUnit.YEARS.between(dataInicial, dataFinal);
+    Aqui está o formato básico para usar a classe ChronoUnit:
+
+
+
+
+
+
+
+
+
+
+
+
